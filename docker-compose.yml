@@ -1,4 +1,16 @@
 services:
+  api:
+    build:
+      context: .
+    container_name: user-registration-api
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   postgres:
     image: postgres:16-alpine
     container_name: user-registration-postgres
