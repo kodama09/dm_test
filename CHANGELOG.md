@@ -16,15 +16,21 @@ MR: [#2 - Configuration and runtime bootstrap](https://github.com/kodama09/dm_te
 • Add the changelog structure.
 • Document the feature finalization rule for version bumps, changelog entries, and merge request bodies.
 
+### 🩹 Fix
+
+• Make setuptools package installation explicit to avoid ambiguous package discovery.
+
 ### 🧪 Test
 
 • Validate settings loading and environment override locally.
 • Validate Docker Compose YAML syntax.
 • Validate the health endpoint still returns application metadata.
+• Validate local wheel build metadata without dependency resolution.
 
 ### 🔒 Security
 
 • Keep local environment values out of version control through `.env`.
+• Run the application container as a non-root user.
 
 ---
 

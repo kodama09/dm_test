@@ -22,9 +22,34 @@ dev = [
 requires = ["setuptools>=75.0.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+[tool.setuptools]
+packages = [
+    "src",
+    "src.bootstrap",
+    "src.config",
+    "src.presentation",
+    "src.presentation.routes",
+    "src.presentation.schemas",
+    "src.presentation.schemas.requests",
+    "src.presentation.schemas.responses",
+    "src.presentation.mappers",
+    "src.presentation.exception_handlers",
+    "src.application",
+    "src.application.use_cases",
+    "src.application.commands",
+    "src.application.dto",
+    "src.application.ports",
+    "src.application.exceptions",
+    "src.domain",
+    "src.domain.entities",
+    "src.domain.value_objects",
+    "src.domain.services",
+    "src.domain.exceptions",
+    "src.infrastructure",
+    "src.infrastructure.database",
+    "src.infrastructure.security",
+    "src.infrastructure.external_services",
+]
 
 [tool.ruff]
 line-length = 88
