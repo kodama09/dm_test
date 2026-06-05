@@ -1,0 +1,29 @@
+[project]
+name = "user-registration-api"
+version = "0.1.0"
+description = "User registration and activation API for the Dailymotion technical assessment."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0,<1.0.0",
+    "pydantic>=2.10.0,<3.0.0",
+    "pydantic-settings>=2.6.0,<3.0.0",
+    "uvicorn[standard]>=0.32.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx>=0.27.0,<1.0.0",
+    "pytest>=8.3.0,<9.0.0",
+    "ruff>=0.8.0,<1.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.user-registration-api]
+codename = "SCL-test"
