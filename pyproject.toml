@@ -62,5 +62,15 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "unit: fast tests for isolated domain and application behavior",
+    "functional: HTTP tests using FastAPI in process without PostgreSQL",
+    "integration: tests that use PostgreSQL through asyncpg",
+    "regression: tests covering previously fixed or high-risk behavior",
+]
+
 [tool.user-registration-api]
 codename = "SCL-test"
