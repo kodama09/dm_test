@@ -59,10 +59,11 @@ class ActivateUserUseCase:
             raise ExpiredActivationCodeError(email)
 
         user.activate(now)
-        await self._user_repository.update(user)
 
         if user.activated_at is None:
             raise RuntimeError("Activated user must have an activation date")
+
+        await self._user_repository.update(user)
 
         return ActivatedUserDTO(
             id=user.id,
