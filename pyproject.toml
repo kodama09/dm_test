@@ -52,6 +52,9 @@ packages = [
     "src.infrastructure.external_services",
 ]
 
+[tool.setuptools.package-data]
+"src.infrastructure.database" = ["migrations/*.sql"]
+
 [tool.ruff]
 line-length = 88
 target-version = "py312"
