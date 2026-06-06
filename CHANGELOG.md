@@ -6,12 +6,15 @@
 
 • Add an asyncpg PostgreSQL connection pool opened and closed through FastAPI lifespan.
 • Add default local PostgreSQL settings aligned with `.env.example`.
+• Add configurable PostgreSQL pool sizing and command timeout settings.
 • Add the initial versioned SQL migration for the `users` table.
 • Add a lightweight asyncpg migration runner executed during application startup.
 
 ### 🩹 Fix
 
 • Provide local database settings defaults to avoid settings validation errors without a `.env` file.
+• Close the PostgreSQL pool when startup migration execution fails.
+• Serialize migration execution with a PostgreSQL advisory lock to avoid concurrent DDL across instances.
 
 ### 🧪 Test
 
