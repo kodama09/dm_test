@@ -1,5 +1,3 @@
-from datetime import UTC, datetime
-
 import pytest
 
 from src.application.commands.activate_user_command import ActivateUserCommand
@@ -11,7 +9,10 @@ from src.application.exceptions.account_activation_errors import (
 )
 from src.application.use_cases.activate_user import ActivateUserUseCase
 from src.bootstrap.dependencies import get_activate_user_use_case
+from src.domain.entities.user import User
+from src.domain.value_objects.activation_code import ActivationCode
 from src.domain.value_objects.email import Email
+from tests.helpers import RecordingPasswordHasher, StaticClock
 
 pytestmark = [pytest.mark.anyio, pytest.mark.regression]
 
@@ -80,44 +81,34 @@ async def test_activation_errors_return_stable_http_responses(
 
 
 class MissingUserRepository:
-    async def exists_by_email(self, email) -> bool:
+    async def exists_by_email(self, email: Email) -> bool:
         return False
 
-    async def get_by_email(self, email):
+    async def get_by_email(self, email: Email) -> User | None:
         return None
 
-    async def save(self, user) -> None:
+    async def save(self, user: User) -> None:
         raise AssertionError("save should not be called")
 
-    async def update(self, user) -> None:
+    async def update(self, user: User) -> None:
         raise AssertionError("update should not be called")
 
 
-class RecordingPasswordHasher:
-    def __init__(self) -> None:
-        self.verified_hashes: list[str] = []
-
-    def verify(self, plain_password: str, password_hash: str) -> bool:
-        self.verified_hashes.append(password_hash)
-        return False
-
-    def dummy_hash(self) -> str:
-        return "dummy-hash"
-
-
 class UnusedActivationCodeHasher:
-    def verify(self, activation_code, activation_code_hash: str) -> bool:
+    def hash(self, activation_code: ActivationCode) -> str:
+        raise AssertionError("activation code should not be hashed")
+
+    def verify(
+        self,
+        activation_code: ActivationCode,
+        activation_code_hash: str,
+    ) -> bool:
         raise AssertionError("activation code should not be verified")
-
-
-class StaticClock:
-    def now(self) -> datetime:
-        return datetime(2026, 1, 1, 12, 0, tzinfo=UTC)
 
 
 class RaisingActivateUseCase:
     def __init__(self, exception: Exception) -> None:
         self._exception = exception
 
-    async def execute(self, command) -> None:
+    async def execute(self, command: ActivateUserCommand) -> None:
         raise self._exception

@@ -1,5 +1,6 @@
 import pytest
 
+from src.application.commands.register_user_command import RegisterUserCommand
 from src.application.exceptions.user_registration_errors import (
     EmailAlreadyRegisteredError,
 )
@@ -27,5 +28,5 @@ async def test_duplicate_registration_returns_conflict(app, http_client) -> None
 
 
 class DuplicateRegisterUseCase:
-    async def execute(self, command) -> None:
+    async def execute(self, command: RegisterUserCommand) -> None:
         raise EmailAlreadyRegisteredError(Email(command.email))

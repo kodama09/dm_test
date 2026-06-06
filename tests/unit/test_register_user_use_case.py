@@ -1,4 +1,3 @@
-from datetime import UTC, datetime
 from uuid import UUID
 
 import pytest
@@ -8,7 +7,14 @@ from src.application.exceptions.user_registration_errors import (
     EmailAlreadyRegisteredError,
 )
 from src.application.use_cases.register_user import RegisterUserUseCase
-from src.domain.value_objects.activation_code import ActivationCode
+from tests.helpers import (
+    InMemoryUserRepository,
+    RecordingEmailSender,
+    StaticActivationCodeGenerator,
+    StaticActivationCodeHasher,
+    StaticClock,
+    StaticPasswordHasher,
+)
 
 pytestmark = [pytest.mark.anyio, pytest.mark.unit]
 
@@ -59,67 +65,3 @@ async def test_register_user_rejects_duplicate_email() -> None:
                 password="CorrectHorse123",
             ),
         )
-
-
-class InMemoryUserRepository:
-    def __init__(self, existing_emails: set[str] | None = None) -> None:
-        self._existing_emails = existing_emails or set()
-        self.saved_user = None
-
-    async def exists_by_email(self, email) -> bool:
-        return str(email) in self._existing_emails
-
-    async def get_by_email(self, email):
-        return None
-
-    async def save(self, user) -> None:
-        self.saved_user = user
-        self._existing_emails.add(str(user.email))
-
-    async def update(self, user) -> None:
-        self.saved_user = user
-
-
-class StaticPasswordHasher:
-    def hash(self, plain_password: str) -> str:
-        return "hashed-password"
-
-    def verify(self, plain_password: str, password_hash: str) -> bool:
-        return True
-
-    def dummy_hash(self) -> str:
-        return "dummy-hash"
-
-
-class StaticActivationCodeGenerator:
-    def generate(self) -> ActivationCode:
-        return ActivationCode("1234")
-
-
-class StaticActivationCodeHasher:
-    def hash(self, activation_code: ActivationCode) -> str:
-        return f"hashed-{activation_code}"
-
-    def verify(
-        self,
-        activation_code: ActivationCode,
-        activation_code_hash: str,
-    ) -> bool:
-        return activation_code_hash == self.hash(activation_code)
-
-
-class RecordingEmailSender:
-    def __init__(self) -> None:
-        self.sent_codes: list[tuple[str, str]] = []
-
-    async def send_activation_code(
-        self,
-        email,
-        activation_code: ActivationCode,
-    ) -> None:
-        self.sent_codes.append((str(email), str(activation_code)))
-
-
-class StaticClock:
-    def now(self) -> datetime:
-        return datetime(2026, 1, 1, 12, 0, tzinfo=UTC)

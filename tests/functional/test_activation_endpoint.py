@@ -3,6 +3,7 @@ from uuid import UUID, uuid4
 
 import pytest
 
+from src.application.commands.activate_user_command import ActivateUserCommand
 from src.application.dto.activated_user_dto import ActivatedUserDTO
 from src.bootstrap.dependencies import get_activate_user_use_case
 
@@ -10,7 +11,9 @@ pytestmark = [pytest.mark.anyio, pytest.mark.functional]
 
 
 async def test_activation_endpoint_returns_activated_user(app, http_client) -> None:
-    app.dependency_overrides[get_activate_user_use_case] = lambda: StubActivateUseCase()
+    app.dependency_overrides[get_activate_user_use_case] = (
+        lambda: StubActivateUseCase()
+    )
 
     response = await http_client.post(
         "/users/activate",
@@ -26,7 +29,7 @@ async def test_activation_endpoint_returns_activated_user(app, http_client) -> N
 
 
 class StubActivateUseCase:
-    async def execute(self, command) -> ActivatedUserDTO:
+    async def execute(self, command: ActivateUserCommand) -> ActivatedUserDTO:
         return ActivatedUserDTO(
             id=uuid4(),
             email=command.email,
