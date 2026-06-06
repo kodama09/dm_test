@@ -26,10 +26,10 @@ FROM runtime AS test
 
 USER root
 
-COPY tests ./tests
-
 RUN pip install --no-cache-dir ".[dev]" \
     && chown -R app:app /app
+
+COPY tests ./tests
 
 USER app
 
