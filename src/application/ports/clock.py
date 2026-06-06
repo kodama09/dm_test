@@ -4,4 +4,5 @@ from typing import Protocol
 
 class Clock(Protocol):
     def now(self) -> datetime:
-        pass
+        """Return a timezone-aware UTC datetime."""
+        ...

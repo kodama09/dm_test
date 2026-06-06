@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timedelta
 from enum import StrEnum
 from uuid import UUID
 
@@ -23,6 +23,18 @@ class User:
     activated_at: datetime | None = None
 
     def __post_init__(self) -> None:
+        self.created_at = _require_utc_datetime(self.created_at, "created_at")
+        self.activation_code_expires_at = _require_utc_datetime(
+            self.activation_code_expires_at,
+            "activation_code_expires_at",
+        )
+
+        if self.activated_at is not None:
+            self.activated_at = _require_utc_datetime(
+                self.activated_at,
+                "activated_at",
+            )
+
         if not self.password_hash:
             raise ValueError("Password hash is required")
 
@@ -42,15 +54,21 @@ class User:
         if self.status is UserStatus.ACTIVATED:
             raise ValueError("User is already activated")
 
+        activated_at = _require_utc_datetime(activated_at, "activated_at")
+
         self.status = UserStatus.ACTIVATED
         self.activated_at = activated_at
 
     def is_activation_code_expired(self, now: datetime) -> bool:
-        return _as_utc(now) >= _as_utc(self.activation_code_expires_at)
+        now = _require_utc_datetime(now, "now")
+        return now >= self.activation_code_expires_at
 
 
-def _as_utc(value: datetime) -> datetime:
-    if value.tzinfo is None:
-        return value.replace(tzinfo=UTC)
+def _require_utc_datetime(value: datetime, field_name: str) -> datetime:
+    if value.tzinfo is None or value.utcoffset() is None:
+        raise ValueError(f"{field_name} must be timezone-aware")
 
-    return value.astimezone(UTC)
+    if value.utcoffset() != timedelta(0):
+        raise ValueError(f"{field_name} must be in UTC")
+
+    return value
