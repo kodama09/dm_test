@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.7.0 - Minimal tests
+
+### 🧪 Test
+
+• Add labelled pytest markers for unit, functional, integration, and regression tests.
+• Add functional health endpoint coverage.
+• Add registration use case, HTTP endpoint, duplicate email regression, and PostgreSQL repository integration coverage.
+• Add activation use case, HTTP endpoint, error response regression, timing regression, and PostgreSQL activation persistence coverage.
+• Run integration tests against the isolated `user_registration_test` PostgreSQL database.
+• Clean integration test data with `TRUNCATE TABLE users RESTART IDENTITY CASCADE`.
+
+### ✨ Add
+
+• Add shared test fixtures for in-process FastAPI HTTP clients.
+• Add PostgreSQL integration fixtures that create and migrate the dedicated test database.
+
+### 🔒 Security
+
+• Keep integration tests isolated from the application database.
+• Preserve explicit PostgreSQL and asyncpg test coverage without ORM, SQLAlchemy, Tortoise, or SQLite.
+
+---
+
 ## 0.6.0 - Account activation
 
 ### ✨ Add
