@@ -9,6 +9,9 @@ class PBKDF2PasswordHasher:
     _iterations = 600_000
     _salt_size = 16
 
+    def __init__(self) -> None:
+        self._dummy_hash = self.hash("dummy-password")
+
     def hash(self, plain_password: str) -> str:
         salt = secrets.token_bytes(self._salt_size)
         password_hash = self._hash_password(plain_password, salt, self._iterations)
@@ -38,6 +41,9 @@ class PBKDF2PasswordHasher:
         )
 
         return hmac.compare_digest(_encode(computed_hash), expected_hash)
+
+    def dummy_hash(self) -> str:
+        return self._dummy_hash
 
     @staticmethod
     def _hash_password(
