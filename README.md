@@ -78,7 +78,7 @@ Example response:
 ```json
 {
   "name": "user-registration-api",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "codename": "SCL-test",
   "status": "ok"
 }

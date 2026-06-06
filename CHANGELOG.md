@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.0.0 - First stable release
+
+### 🚀 Release
+
+• Promote the completed user registration and activation API to the first stable release.
+• Deliver Docker-only application startup and test execution for reviewers.
+• Include the final README, architecture documentation, and assessment review checklist.
+
+### ✨ Add
+
+• Provide user registration with email, password hashing, activation code generation, and console email delivery.
+• Provide account activation with Basic Auth, activation code validation, and one-minute expiration.
+• Persist users in PostgreSQL through asyncpg and raw SQL.
+• Run versioned SQL migrations at startup without Alembic.
+
+### 🧪 Test
+
+• Cover unit, functional, integration, and regression behavior with labelled pytest markers.
+• Run PostgreSQL integration tests against an isolated `user_registration_test` database.
+• Validate the full suite locally and through Docker Compose.
+
+### 🔒 Security
+
+• Store password hashes and activation code hashes instead of raw secrets.
+• Enforce email uniqueness in PostgreSQL and translate duplicate persistence conflicts.
+• Reduce activation credential timing differences for unknown emails.
+• Preserve the project constraints: no ORM, no SQLAlchemy, no Tortoise, no SQLite, and no Alembic.
+
+---
+
 ## 0.8.0 - Documentation and final review
 
 ### 🐋 Config
