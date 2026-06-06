@@ -5,6 +5,7 @@ description = "User registration and activation API for the Dailymotion technica
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "asyncpg>=0.30.0,<1.0.0",
     "fastapi>=0.115.0,<1.0.0",
     "pydantic>=2.10.0,<3.0.0",
     "pydantic-settings>=2.6.0,<3.0.0",

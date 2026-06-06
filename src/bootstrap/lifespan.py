@@ -3,7 +3,16 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from src.config.settings import get_settings
+from src.infrastructure.database.postgres_pool import create_postgres_pool
+
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
-    yield
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    settings = get_settings()
+    app.state.postgres_pool = await create_postgres_pool(settings)
+
+    try:
+        yield
+    finally:
+        await app.state.postgres_pool.close()
