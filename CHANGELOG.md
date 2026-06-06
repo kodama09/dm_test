@@ -19,7 +19,7 @@
 ### 🔒 Security
 
 • Keep integration tests isolated from the application database.
-• Preserve explicit PostgreSQL and asyncpg test coverage without ORM, SQLAlchemy, Tortoise, or SQLite.
+• Preserve explicit PostgreSQL and asyncpg test coverage without an ORM (such as SQLAlchemy or Tortoise) or SQLite.
 
 ---
 
