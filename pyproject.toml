@@ -1,6 +1,6 @@
 [project]
 name = "user-registration-api"
-version = "0.6.0"
+version = "0.7.0"
 description = "User registration and activation API for the Dailymotion technical assessment."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -61,6 +61,16 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "unit: fast tests for isolated domain and application behavior",
+    "functional: HTTP tests using FastAPI in process without PostgreSQL",
+    "integration: tests that use PostgreSQL through asyncpg",
+    "regression: tests covering previously fixed or high-risk behavior",
+]
 
 [tool.user-registration-api]
 codename = "SCL-test"
