@@ -7,6 +7,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    activation_code_length: PositiveInt = 4
+    activation_code_secret: SecretStr = SecretStr("local_activation_code_secret")
     app_env: Literal["local", "test", "production"] = "local"
     postgres_db: str = "user_registration"
     postgres_host: str = "localhost"
@@ -42,6 +44,13 @@ class Settings(BaseSettings):
                 "postgres_pool_max_size"
             )
             raise ValueError(msg)
+
+        return self
+
+    @model_validator(mode="after")
+    def validate_activation_code_length(self) -> Self:
+        if not 4 <= self.activation_code_length <= 12:
+            raise ValueError("activation_code_length must be between 4 and 12")
 
         return self
 
