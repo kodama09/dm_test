@@ -1,6 +1,6 @@
 [project]
 name = "user-registration-api"
-version = "0.2.0"
+version = "0.3.0"
 description = "User registration and activation API for the Dailymotion technical assessment."
 readme = "README.md"
 requires-python = ">=3.12"

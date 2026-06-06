@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.3.0 - Database foundation
+
+### ✨ Add
+
+• Add an asyncpg PostgreSQL connection pool opened and closed through FastAPI lifespan.
+• Add default local PostgreSQL settings aligned with `.env.example`.
+• Add the initial versioned SQL migration for the `users` table.
+• Add a lightweight asyncpg migration runner executed during application startup.
+
+### 🩹 Fix
+
+• Provide local database settings defaults to avoid settings validation errors without a `.env` file.
+
+### 🧪 Test
+
+• Validate Python source compilation.
+• Validate Ruff checks.
+• Validate Docker Compose build and startup with PostgreSQL.
+• Validate migration execution and idempotent API restart.
+
+### 🔒 Security
+
+• Keep persistence explicit with asyncpg and raw SQL only.
+• Track migrations without Alembic, SQLAlchemy, SQLite, or ORM dependencies.
+
+---
+
 ## 0.2.0 - Configuration and runtime bootstrap
 
 MR: [#2 - Configuration and runtime bootstrap](https://github.com/kodama09/dm_test/pull/2)
