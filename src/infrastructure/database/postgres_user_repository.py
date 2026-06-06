@@ -79,3 +79,24 @@ class PostgresUserRepository:
                 )
             except asyncpg.UniqueViolationError as exc:
                 raise EmailAlreadyRegisteredError(user.email) from exc
+
+    async def update(self, user: User) -> None:
+        async with self._pool.acquire() as connection:
+            await connection.execute(
+                """
+                UPDATE users
+                SET
+                    password_hash = $2,
+                    activation_code_hash = $3,
+                    activation_code_expires_at = $4,
+                    status = $5,
+                    activated_at = $6
+                WHERE id = $1
+                """,
+                user.id,
+                user.password_hash,
+                user.activation_code_hash,
+                user.activation_code_expires_at,
+                user.status.value,
+                user.activated_at,
+            )

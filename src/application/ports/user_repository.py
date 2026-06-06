@@ -13,3 +13,6 @@ class UserRepository(Protocol):
 
     async def save(self, user: User) -> None:
         ...
+
+    async def update(self, user: User) -> None:
+        ...
