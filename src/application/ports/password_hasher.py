@@ -7,3 +7,6 @@ class PasswordHasher(Protocol):
 
     def verify(self, plain_password: str, password_hash: str) -> bool:
         ...
+
+    def dummy_hash(self) -> str:
+        ...

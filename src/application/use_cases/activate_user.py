@@ -31,11 +31,14 @@ class ActivateUserUseCase:
     async def execute(self, command: ActivateUserCommand) -> ActivatedUserDTO:
         email = Email(command.email)
         user: User | None = await self._user_repository.get_by_email(email)
+        password_hash = (
+            user.password_hash if user else self._password_hasher.dummy_hash()
+        )
 
-        if user is None:
+        if not self._password_hasher.verify(command.password, password_hash):
             raise InvalidCredentialsError()
 
-        if not self._password_hasher.verify(command.password, user.password_hash):
+        if user is None:
             raise InvalidCredentialsError()
 
         if user.status is UserStatus.ACTIVATED:
