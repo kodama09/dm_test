@@ -20,7 +20,9 @@ def get_register_user_use_case(request: Request) -> RegisterUserUseCase:
     return RegisterUserUseCase(
         user_repository=PostgresUserRepository(request.app.state.postgres_pool),
         password_hasher=PBKDF2PasswordHasher(),
-        activation_code_generator=RandomActivationCodeGenerator(),
+        activation_code_generator=RandomActivationCodeGenerator(
+            settings.activation_code_length,
+        ),
         activation_code_hasher=HMACActivationCodeHasher(
             settings.activation_code_secret,
         ),
