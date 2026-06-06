@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.8.0 - Documentation and final review
+
+### 🐋 Config
+
+• Add a Docker test target and Compose test service.
+• Allow reviewers to run the full test suite with Docker only.
+• Keep runtime and test images separated through Docker build targets.
+
+### 📖 Docs
+
+• Complete the README with Docker startup, API usage, test execution, configuration, architecture, and technical decisions.
+• Add architecture documentation with component and sequence diagrams.
+• Add a final review checklist against the original assessment requirements.
+
+### 🧪 Test
+
+• Validate Ruff checks.
+• Validate Python source and test compilation.
+• Validate the full local pytest suite.
+• Validate Docker Compose configuration.
+• Validate the full Docker test suite against PostgreSQL.
+• Validate the running Docker API health endpoint.
+
+### 🔒 Security
+
+• Keep test execution isolated from the application database.
+• Preserve PostgreSQL and asyncpg usage without an ORM, SQLAlchemy, Tortoise, SQLite, or Alembic.
+• Document remaining production considerations for replacing the console email adapter and adding activation attempt rate limiting.
+
+---
+
 ## 0.7.0 - Minimal tests
 
 ### 🧪 Test

@@ -1,0 +1,15 @@
+.git
+.pytest_cache
+.ruff_cache
+.venv
+.vscode
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+!.env.example
+roadmap.html
+EXPLAINATIONS.md
+user_registration_api.egg-info
