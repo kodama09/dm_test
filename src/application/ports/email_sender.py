@@ -10,4 +10,4 @@ class EmailSender(Protocol):
         email: Email,
         activation_code: ActivationCode,
     ) -> None:
-        pass
+        ...
