@@ -10,7 +10,7 @@ from src.application.ports.activation_code_hasher import ActivationCodeHasher
 from src.application.ports.clock import Clock
 from src.application.ports.password_hasher import PasswordHasher
 from src.application.ports.user_repository import UserRepository
-from src.domain.entities.user import UserStatus, User
+from src.domain.entities.user import User, UserStatus
 from src.domain.value_objects.activation_code import ActivationCode
 from src.domain.value_objects.email import Email
 
@@ -62,5 +62,8 @@ class ActivateUserUseCase:
             raise RuntimeError("Activated user must have an activation date")
 
         return ActivatedUserDTO(
-            id=user.id, email=str(user.email), status=user.status.value, activated_at=user.activated_at
+            id=user.id,
+            email=str(user.email),
+            status=user.status.value,
+            activated_at=user.activated_at,
         )
