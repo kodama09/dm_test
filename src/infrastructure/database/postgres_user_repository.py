@@ -1,5 +1,8 @@
 import asyncpg
 
+from src.application.exceptions.user_registration_errors import (
+    EmailAlreadyRegisteredError,
+)
 from src.domain.entities.user import User, UserStatus
 from src.domain.value_objects.email import Email
 
@@ -50,26 +53,29 @@ class PostgresUserRepository:
 
     async def save(self, user: User) -> None:
         async with self._pool.acquire() as connection:
-            await connection.execute(
-                """
-                INSERT INTO users (
-                    id,
-                    email,
-                    password_hash,
-                    activation_code_hash,
-                    activation_code_expires_at,
-                    status,
-                    created_at,
-                    activated_at
+            try:
+                await connection.execute(
+                    """
+                    INSERT INTO users (
+                        id,
+                        email,
+                        password_hash,
+                        activation_code_hash,
+                        activation_code_expires_at,
+                        status,
+                        created_at,
+                        activated_at
+                    )
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    """,
+                    user.id,
+                    str(user.email),
+                    user.password_hash,
+                    user.activation_code_hash,
+                    user.activation_code_expires_at,
+                    user.status.value,
+                    user.created_at,
+                    user.activated_at,
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                """,
-                user.id,
-                str(user.email),
-                user.password_hash,
-                user.activation_code_hash,
-                user.activation_code_expires_at,
-                user.status.value,
-                user.created_at,
-                user.activated_at,
-            )
+            except asyncpg.UniqueViolationError as exc:
+                raise EmailAlreadyRegisteredError(user.email) from exc
