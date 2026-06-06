@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.5.0 - User registration
+
+### ✨ Add
+
+• Add the registration use case for pending user creation.
+• Add password hashing, activation code generation, activation code hashing, and console email adapters.
+• Add an asyncpg user repository for explicit PostgreSQL persistence.
+• Add the `POST /users` route with request and response schemas.
+• Wire user registration through FastAPI dependencies while keeping routes thin.
+
+### 🧪 Test
+
+• Validate Python source compilation.
+• Validate Ruff checks.
+• Validate Docker Compose API and PostgreSQL services are running.
+• Validate successful `POST /users` registration through the running API.
+• Validate registered users are persisted in PostgreSQL with `pending_activation` status.
+• Validate activation codes are emitted through the console email adapter logs.
+
+### 🔒 Security
+
+• Store password hashes instead of raw passwords.
+• Store activation code hashes instead of raw activation codes.
+• Keep the registration workflow behind application ports for persistence, hashing, code generation, time, and email delivery.
+
+---
+
 ## 0.4.0 - Domain and application contracts
 
 ### ✨ Add
