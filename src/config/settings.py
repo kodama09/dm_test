@@ -7,6 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    activation_code_secret: SecretStr = SecretStr("local_activation_code_secret")
     app_env: Literal["local", "test", "production"] = "local"
     postgres_db: str = "user_registration"
     postgres_host: str = "localhost"
