@@ -1,6 +1,6 @@
 [project]
 name = "user-registration-api"
-version = "0.1.0"
+version = "0.2.0"
 description = "User registration and activation API for the Dailymotion technical assessment."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -16,6 +16,39 @@ dev = [
     "httpx>=0.27.0,<1.0.0",
     "pytest>=8.3.0,<9.0.0",
     "ruff>=0.8.0,<1.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+    "src",
+    "src.bootstrap",
+    "src.config",
+    "src.presentation",
+    "src.presentation.routes",
+    "src.presentation.schemas",
+    "src.presentation.schemas.requests",
+    "src.presentation.schemas.responses",
+    "src.presentation.mappers",
+    "src.presentation.exception_handlers",
+    "src.application",
+    "src.application.use_cases",
+    "src.application.commands",
+    "src.application.dto",
+    "src.application.ports",
+    "src.application.exceptions",
+    "src.domain",
+    "src.domain.entities",
+    "src.domain.value_objects",
+    "src.domain.services",
+    "src.domain.exceptions",
+    "src.infrastructure",
+    "src.infrastructure.database",
+    "src.infrastructure.security",
+    "src.infrastructure.external_services",
 ]
 
 [tool.ruff]
