@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.6.0 - Account activation
+
+### ✨ Add
+
+• Add the account activation use case for pending users.
+• Add activation validation for Basic Auth credentials, activation codes, expiration, and activation status.
+• Add repository support for persisting activated user state.
+• Add the `POST /users/activate` route with Basic Auth and request validation.
+• Add consistent API exception handlers for registration and activation errors.
+
+### 🧪 Test
+
+• Validate Python source compilation.
+• Validate Ruff checks.
+• Validate Docker Compose API and PostgreSQL services rebuild successfully.
+• Validate successful registration and activation through the running API.
+• Validate duplicate registration, invalid activation code, invalid credentials, expired activation code, and already activated account HTTP responses.
+
+### 🔒 Security
+
+• Require Basic Auth credentials for account activation.
+• Verify passwords and activation codes through hashing ports.
+• Keep activation errors mapped to explicit HTTP responses without exposing stored secrets.
+
+---
+
 ## 0.5.0 - User registration
 
 ### ✨ Add
