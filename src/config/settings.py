@@ -8,11 +8,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     app_env: Literal["local", "test", "production"] = "local"
-    postgres_db: str
-    postgres_host: str
-    postgres_password: SecretStr
-    postgres_port: int
-    postgres_user: str
+    postgres_db: str = "user_registration"
+    postgres_host: str = "localhost"
+    postgres_password: SecretStr = SecretStr("user_registration_password")
+    postgres_port: int = 5432
+    postgres_user: str = "user_registration"
 
     model_config = SettingsConfigDict(
         env_file=".env",
