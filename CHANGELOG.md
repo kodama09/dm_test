@@ -15,6 +15,14 @@
 • Validate Python source compilation.
 • Validate Ruff checks.
 
+### 🩹 Fix
+
+• Require timezone-aware UTC datetimes for user lifecycle and activation expiration checks.
+
+### ♻️ Refactor
+
+• Clarify application port contracts with ellipsis method bodies.
+
 ### 🔒 Security
 
 • Keep domain and application contracts independent from FastAPI, asyncpg, and infrastructure implementations.
