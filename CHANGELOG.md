@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.4.0 - Domain and application contracts
+
+### ✨ Add
+
+• Add the user domain entity and activation status.
+• Add email and activation code value objects.
+• Add registration and activation application commands.
+• Add registration and activation DTOs.
+• Add application ports for persistence, email delivery, hashing, code generation, and time.
+
+### 🧪 Test
+
+• Validate Python source compilation.
+• Validate Ruff checks.
+
+### 🩹 Fix
+
+• Require timezone-aware UTC datetimes for user lifecycle and activation expiration checks.
+
+### ♻️ Refactor
+
+• Clarify application port contracts with ellipsis method bodies.
+
+### 🔒 Security
+
+• Keep domain and application contracts independent from FastAPI, asyncpg, and infrastructure implementations.
+• Keep activation codes represented as secrets through value objects and hashing ports.
+
+---
+
 ## 0.3.0 - Database foundation
 
 ### ✨ Add
