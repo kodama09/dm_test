@@ -11,10 +11,11 @@ from src.infrastructure.database.postgres_pool import create_postgres_pool
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
-    app.state.postgres_pool = await create_postgres_pool(settings)
-    await run_migrations(app.state.postgres_pool)
+    postgres_pool = await create_postgres_pool(settings)
+    app.state.postgres_pool = postgres_pool
 
     try:
+        await run_migrations(postgres_pool)
         yield
     finally:
-        await app.state.postgres_pool.close()
+        await postgres_pool.close()
